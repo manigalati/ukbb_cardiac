@@ -26,11 +26,11 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_enum('seq_name', 'sa',
                          ['sa', 'la_2ch', 'la_4ch'],
                          'Sequence name.')
-tf.app.flags.DEFINE_string('data_dir', '/vol/bitbucket/wbai/own_work/ukbb_cardiac_demo',
+tf.app.flags.DEFINE_string('data_dir', 'dataset/test',
                            'Path to the data set directory, under which images '
                            'are organised in subdirectories for each subject.')
 tf.app.flags.DEFINE_string('model_path',
-                           '',
+                           '/content/ukbb_cardiac/model/FCN_sa_level5_filter16_22333_batch2_iter1000_lr0.001/FCN_sa_level5_filter16_22333_batch2_iter1000_lr0.001',
                            'Path to the saved trained model.')
 tf.app.flags.DEFINE_boolean('process_seq', True,
                             'Process a time sequence of images.')

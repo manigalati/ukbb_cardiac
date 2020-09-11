@@ -34,7 +34,7 @@ tf.app.flags.DEFINE_integer('train_batch_size', 2,
                             'Number of images for each training batch.')
 tf.app.flags.DEFINE_integer('validation_batch_size', 2,
                             'Number of images for each validation batch.')
-tf.app.flags.DEFINE_integer('train_iteration', 50000,
+tf.app.flags.DEFINE_integer('train_iteration', 1000,#50000,
                             'Number of training iterations.')
 tf.app.flags.DEFINE_integer('num_filter', 16,
                             'Number of filters for the first convolution layer.')
@@ -43,14 +43,14 @@ tf.app.flags.DEFINE_integer('num_level', 5,
 tf.app.flags.DEFINE_float('learning_rate', 1e-3,
                           'Learning rate.')
 tf.app.flags.DEFINE_string('dataset_dir',
-                           '/vol/medic02/users/wbai/data/cardiac_atlas/UKBB_2964/sa',
+                           '/content/ukbb_cardiac/dataset',
                            'Path to the dataset directory, which is split into '
                            'training, validation and test subdirectories.')
-tf.app.flags.DEFINE_string('log_dir',
-                           '/vol/bitbucket/wbai/ukbb_cardiac/log',
-                           'Directory for saving the log file.')
+#tf.app.flags.DEFINE_string('log_dir',
+#                           '/content/ukbb_cardiac/log',
+#                           'Directory for saving the log file.')
 tf.app.flags.DEFINE_string('checkpoint_dir',
-                           '/vol/bitbucket/wbai/ukbb_cardiac/model',
+                           '/content/ukbb_cardiac/model',
                            'Directory for saving the trained model.')
 
 
@@ -124,6 +124,7 @@ def main(argv=None):
     # and list the file names of the subjects
     data_list = {}
     for k in ['train', 'validation', 'test']:
+        print(k)
         subset_dir = os.path.join(FLAGS.dataset_dir, k)
         data_list[k] = []
 
@@ -131,9 +132,9 @@ def main(argv=None):
             data_dir = os.path.join(subset_dir, data)
             # Check the existence of the image and label map at ED and ES time frames
             # and add their file names to the list
-            for fr in ['ED', 'ES']:
-                image_name = '{0}/{1}_{2}.nii.gz'.format(data_dir, FLAGS.seq_name, fr)
-                label_name = '{0}/label_{1}_{2}.nii.gz'.format(data_dir, FLAGS.seq_name, fr)
+            for fr in ['frame01', 'frame1*']:
+                image_name = '{0}/{1}_{2}.nii.gz'.format(data_dir, data, fr)
+                label_name = '{0}/{1}_{2}_gt.nii.gz'.format(data_dir, data, fr)
                 if os.path.exists(image_name) and os.path.exists(label_name):
                     data_list[k] += [[image_name, label_name]]
 
